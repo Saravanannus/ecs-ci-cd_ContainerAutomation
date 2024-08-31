@@ -29,6 +29,7 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:  # added myself
 
 env:            
   AWS_REGION: ap-southeast-1           
@@ -38,8 +39,8 @@ env:
   CONTAINER_NAME: sara-ecs-sample         
                                                
 
-# permissions:
-#   contents: read
+permissions: #activate
+   contents: read #activate
 
 jobs:
   deploy:
@@ -61,20 +62,26 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with: # newly added line 65 to 68
+        registry-type: public
+      env:
+        AWS_REGION: us-east-1
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
+        AWS_REGION: us-east-1 # newly added line 75 & 78
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # aws ecr-public create-repository --repository-name sara-node-app --region us-east-1
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
     
     - name: Download task definition
       run: |
-        aws ecs describe-task-definition --task-definition ecsdemo --query taskDefinition > task-definition.json
+        aws ecs describe-task-definition --task-definition sara-ecs-tf --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
