@@ -35,10 +35,12 @@ module "ecs" {
 
         sara-ecs-sample = { #container name
           essential = true 
-          image     = "public.ecr.aws/docker/library/httpd:latest"
+          # image     = "public.ecr.aws/docker/library/httpd:latest"
+          image     = "public.ecr.aws/u2q1a2y8/sara-node-app/hello-node-app:v1" 
           port_mappings = [
             {
-              name          = "sara-ecs-sample"  #container name
+             # name          = "sara-ecs-sample"  #container name
+             name          = "hello-node-app-ecs"  # modified from above line
               containerPort = 8080
               protocol      = "tcp"
             }
@@ -47,10 +49,10 @@ module "ecs" {
 
         }
       }
-      assign_public_ip = true
+      assign_public_ip                   = true
       deployment_minimum_healthy_percent = 100
-      subnet_ids = flatten(data.aws_subnets.public.ids)
-      security_group_ids  = [aws_security_group.allow_sg.id]
+      subnet_ids                         = flatten(data.aws_subnets.public.ids)
+      security_group_ids                 = [aws_security_group.allow_sg.id]
     }
   }
 }
