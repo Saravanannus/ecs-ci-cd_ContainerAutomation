@@ -36,11 +36,11 @@ module "ecs" {
         sara-ecs-sample = { #container name
           essential = true 
           # image     = "public.ecr.aws/docker/library/httpd:latest"
-          image     = "public.ecr.aws/u2q1a2y8/sara-node-app/hello-node-app:v1" 
+          image     = "public.ecr.aws/u2q1a2y8/sara-node-app:v1" 
           port_mappings = [
             {
-             # name          = "sara-ecs-sample"  #container name
-             name          = "hello-node-app-ecs"  # modified from above line
+              name          = "sara-ecs-sample"  #container name
+             # name          = "hello-node-app-ecs"  # modified from above line
               containerPort = 8080
               protocol      = "tcp"
             }
