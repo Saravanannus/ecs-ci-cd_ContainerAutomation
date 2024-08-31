@@ -15,7 +15,7 @@ data "aws_subnets" "public" {
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
 
-  cluster_name = "sara-ecs-tf"   #Change
+  cluster_name = "sara-ecc-tf"   #Change
 
   fargate_capacity_providers = {
     FARGATE = {
@@ -56,7 +56,7 @@ module "ecs" {
 }
 
 resource "aws_security_group" "allow_sg" {
-  name        = "allow_tls"
+  name        = "sara_allow_tls" # added my name
   description = "Allow traffic"
   vpc_id      = data.aws_vpc.selected.id
 
@@ -65,7 +65,8 @@ resource "aws_security_group" "allow_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [data.aws_vpc.selected.cidr_block]
+    #cidr_blocks = [data.aws_vpc.selected.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"] # added my self base previous excise
   }
 
   egress {

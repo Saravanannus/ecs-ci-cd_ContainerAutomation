@@ -34,7 +34,7 @@ env:
   AWS_REGION: ap-southeast-1           
   ECR_REPOSITORY: sara-node-app       
   ECS_SERVICE: sara-ecs-tf      
-  ECS_CLUSTER: sara-ecs-tf                     
+  ECS_CLUSTER: sara-ecc-tf                     
   CONTAINER_NAME: sara-ecs-sample         
                                                
 
