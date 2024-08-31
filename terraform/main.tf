@@ -1,7 +1,7 @@
 data "aws_vpc" "selected" {
   filter {
     name   = "tag:Name"
-    values = ["sctp-sandbox-vpc-vpc"]
+    values = ["Default VPC"]
   }
 }
 
@@ -15,7 +15,7 @@ data "aws_subnets" "public" {
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
 
-  cluster_name = "ecs-tf"   #Change
+  cluster_name = "sara-ecs-tf"   #Change
 
   fargate_capacity_providers = {
     FARGATE = {
@@ -26,19 +26,19 @@ module "ecs" {
   }
 
   services = {
-    ecsdemo = { #task def and service name -> #Change
+    sara-ecs-tf = { #task def and service name -> #Change
       cpu    = 512
       memory = 1024
 
       # Container definition(s)
       container_definitions = {
 
-        ecs-sample = { #container name
+        sara-ecs-sample = { #container name
           essential = true 
           image     = "public.ecr.aws/docker/library/httpd:latest"
           port_mappings = [
             {
-              name          = "ecs-sample"  #container name
+              name          = "sara-ecs-sample"  #container name
               containerPort = 8080
               protocol      = "tcp"
             }
