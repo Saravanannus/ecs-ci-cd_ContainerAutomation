@@ -65,17 +65,17 @@ jobs:
       with: # newly added line 65 to 68
         registry-type: public
       env:
-        AWS_REGION: us-east-1
+        AWS_REGION: ap-southeast-1 
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
-        AWS_REGION: us-east-1 # newly added line 75 & 78
+        AWS_REGION: ap-southeast-1  # newly added line 75 & 78
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # aws ecr-public create-repository --repository-name sara-node-app --region us-east-1
+        # aws ecr-public create-repository --repository-name sara-node-app --region ap-southeast-1 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
     
