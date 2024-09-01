@@ -63,9 +63,9 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1 # changed from @v1 to @v2
       with: # newly added line 65 to 68
-        registry-type: public
-      env:
-        AWS_REGION: ap-southeast-1 
+        # registry-type: public
+     # env:
+      #  AWS_REGION: ap-southeast-1 
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -75,7 +75,6 @@ jobs:
         AWS_REGION: ap-southeast-1  # newly added line 75 & 78
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # aws ecr-public create-repository --repository-name sara-node-app --region ap-southeast-1 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
     
