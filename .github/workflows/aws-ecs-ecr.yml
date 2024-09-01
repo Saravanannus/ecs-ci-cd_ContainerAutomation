@@ -33,7 +33,7 @@ on:
 
 env:            
   AWS_REGION: ap-southeast-1           
-  ECR_REPOSITORY: sara-node-app1       
+  ECR_REPOSITORY: sara-node-app       
   ECS_SERVICE: sara-ecs-tf      
   ECS_CLUSTER: sara-ecc-tf                     
   CONTAINER_NAME: sara-ecs-sample         
@@ -75,7 +75,7 @@ jobs:
         AWS_REGION: us-east-1 # newly added line 75 & 78
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # aws ecr-public create-repository --repository-name sara-node-app1 --region us-east-1
+        # aws ecr-public create-repository --repository-name sara-node-app --region us-east-1
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
     
