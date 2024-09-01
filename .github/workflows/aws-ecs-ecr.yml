@@ -62,7 +62,7 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1 # changed from @v1 to @v2
-      with: # newly added line 65 to 68
+      #with: # newly added line 65 to 68
         # registry-type: public
      # env:
       #  AWS_REGION: ap-southeast-1 
